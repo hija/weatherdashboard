@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <center><h1>Station-Overview</h1></center>
+  <table style="width:100%" class="paleBlueRows">
+  <thead>
+  <tr>
+   <th>ID</th>
+   <th>Stationname</th>
+   <th>Description</th>
+   <th>Actions</th>
+  </tr>
+</thead>
+  {% for station in stations %}
+  <tr>
+   <td>{{ station['id'] }}</td>
+   <td>{{ station['stationname'] }}</td>
+   <td>{{ station['description'] }}</td>
+   <td>XXX</td>
+  </tr>
+  {% endfor %}
+  </table>
+{% endblock %}
