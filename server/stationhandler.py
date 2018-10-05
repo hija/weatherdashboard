@@ -13,6 +13,8 @@ def addstation():
             stationname = request.form['stationname']
             description = request.form['description']
             db = get_db()
+            if station_exists(db, stationname):
+                return 'Station already exists!'
             db.execute(
             'INSERT INTO station (stationname, description) VALUES (?, ?)',
             (stationname, description))
@@ -30,3 +32,7 @@ def getstations():
         ' FROM station'
     ).fetchall()
     return render_template('stationlist.html', stations=stations)
+
+
+def station_exists(db, stationname):
+    return db.execute('SELECT id FROM station WHERE stationname = ?', (stationname,)).fetchone() is not None
