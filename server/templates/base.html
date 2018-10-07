@@ -28,6 +28,20 @@
         {% include 'nav.html' %}
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+          {% with errors = get_flashed_messages(category_filter=["error"]) %}
+            {% if errors %}
+            <div class="alert alert-danger mt-4" role="alert">
+              <ul>
+                {%- for msg in errors %}
+                <li>{{ msg }}</li>
+                {% endfor -%}
+              </ul>
+            </div>
+            {% endif %}
+          {% endwith %}
+
+
+
           {% block content %}
           LOLOLOLO
           {% endblock %}

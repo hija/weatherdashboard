@@ -1,27 +1,36 @@
 {% extends 'base.html' %}
+{% set active_page = "records_overview" %}
 
 {% block content %}
-  <center><h1>Records-Overview</h1></center>
-  <table style="width:100%" class="paleBlueRows">
-  <thead>
-  <tr>
-   <th>ID</th>
-   <th>Zeitpunk</th>
-   <th>Temperatur</th>
-   <th>Feuchtigkeit</th>
-   <th>Luftdruck</th>
-   <th>Aktion</th>
-  </tr>
-</thead>
-  {% for record in records %}
-  <tr>
-   <td>{{ record['id'] }}</td>
-   <td>{{ record['timepoint'] }}</td>
-   <td>{{ record['temperature'] }}</td>
-   <td>{{ record['humidity'] }}</td>
-   <td>{{ record['pressure'] }}</td>
-   <td>XXX</td>
-  </tr>
-  {% endfor %}
+  <h1>Records overview {%if not showstationname%}for {{ request.path.rsplit('/', 1)[-1] }} {% endif %}</h1>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        {%if showstationname%}
+        <th>Stationname</th>
+        {% endif %}
+        <th>Zeitpunk</th>
+        <th>Temperatur</th>
+        <th>Feuchtigkeit</th>
+        <th>Luftdruck</th>
+        <th>Aktion</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for record in records %}
+      <tr>
+       <td>{{ record['id'] }}</td>
+       {%if showstationname%}
+       <td>{{ record['stationname'] }}</td>
+       {% endif %}
+       <td>{{ record['timepoint'] }}</td>
+       <td>{{ record['temperature'] }}</td>
+       <td>{{ record['humidity'] }}</td>
+       <td>{{ record['pressure'] }}</td>
+       <td>XXX</td>
+      </tr>
+      {% endfor %}
+    </tbody>
   </table>
 {% endblock %}

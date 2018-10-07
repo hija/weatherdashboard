@@ -28,9 +28,11 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
-    from server import recordhandler, stationhandler
+    from server import recordhandler, stationhandler, settingshandler, vishandler
     app.register_blueprint(recordhandler.bp)
     app.register_blueprint(stationhandler.bp)
+    app.register_blueprint(settingshandler.bp)
+    app.register_blueprint(vishandler.bp)
 
     @app.route('/')
     def hello():

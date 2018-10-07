@@ -36,4 +36,13 @@ def get_records_for_stationname(stationname):
         ).fetchall()
         return render_template('record/recordlist.html', records=records)
     else:
-        return 'Station does not exist'
+        flash(u'The station does not exist. Showing all records instead!', 'error')
+        return get_records()
+
+@bp.route('/')
+def get_records():
+    db = get_db()
+    records = db.execute(
+        'SELECT record.id, station.stationname, timepoint, temperature, humidity, pressure FROM record INNER JOIN station on record.station_id = station.id; '
+    ).fetchall()
+    return render_template('record/recordlist.html', records=records, showstationname = True)

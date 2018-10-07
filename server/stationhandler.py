@@ -27,7 +27,7 @@ def addstation():
             return 'Missing parameters!'
     return 'This method requires an POST-Request with the fields stationname and description'
 
-@bp.route('/list')
+@bp.route('/')
 def getstations():
     db = get_db()
     stations = db.execute(

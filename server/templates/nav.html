@@ -1,5 +1,9 @@
 {% set navigation_bar = [
-    ('Main', [('/', 'home', 'index', 'Overview')])
+    ('Main', [('/', 'home', 'index', 'Overview')]),
+    ('Visualizations', [('/visualisations', 'home', 'vis_overview', 'Overview')]),
+    ('Records', [('/records', 'home', 'records_overview', 'Overview')]),
+    ('Stations', [('/stations', 'home', 'stations_overview', 'Overview')]),
+    ('Settings', [('/settings', 'settings', 'settings_overview', 'General')]),
 ] -%}
 
 {% set active_page = active_page|default('index') -%}
