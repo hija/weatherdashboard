@@ -1,0 +1,25 @@
+{% set navigation_bar = [
+    ('Main', [('/', 'home', 'index', 'Overview')])
+] -%}
+
+{% set active_page = active_page|default('index') -%}
+
+<nav class="col-md-2 d-none d-md-block bg-light sidebar">
+  <div class="sidebar-sticky">
+    {% for section, items in navigation_bar %}
+    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+      <span>{{ section }}</span>
+    </h6>
+    <ul class="nav flex-column mb-2">
+      {% for href, icon, id, text in items %}
+        <li class="nav-item">
+          <a class="nav-link {% if id == active_page %} active {% endif %}" href="{{ href }}">
+            <span data-feather="{{ icon }}"></span>
+            {{ text }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+    {% endfor %}
+  </div>
+</nav>

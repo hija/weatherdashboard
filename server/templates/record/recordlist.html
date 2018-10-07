@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <center><h1>Records-Overview</h1></center>
+  <table style="width:100%" class="paleBlueRows">
+  <thead>
+  <tr>
+   <th>ID</th>
+   <th>Zeitpunk</th>
+   <th>Temperatur</th>
+   <th>Feuchtigkeit</th>
+   <th>Luftdruck</th>
+   <th>Aktion</th>
+  </tr>
+</thead>
+  {% for record in records %}
+  <tr>
+   <td>{{ record['id'] }}</td>
+   <td>{{ record['timepoint'] }}</td>
+   <td>{{ record['temperature'] }}</td>
+   <td>{{ record['humidity'] }}</td>
+   <td>{{ record['pressure'] }}</td>
+   <td>XXX</td>
+  </tr>
+  {% endfor %}
+  </table>
+{% endblock %}
