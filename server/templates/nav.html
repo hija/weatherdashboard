@@ -3,7 +3,7 @@
     ('Visualizations', [('/visualisations', 'home', 'vis_overview', 'Overview')]),
     ('Records', [('/records', 'home', 'records_overview', 'Overview')]),
     ('Stations', [('/stations', 'home', 'stations_overview', 'Overview')]),
-    ('Settings', [('/settings', 'settings', 'settings_overview', 'General')]),
+    ('Settings', [('/settings', 'settings', 'settings_overview', 'General'), ('/settings/about', 'info', 'settings_about', 'About')]),
 ] -%}
 
 {% set active_page = active_page|default('index') -%}
@@ -17,7 +17,7 @@
     <ul class="nav flex-column mb-2">
       {% for href, icon, id, text in items %}
         <li class="nav-item">
-          <a class="nav-link {% if id == active_page %} active {% endif %}" href="{{ href }}">
+          <a class="nav-link {% if id == active_page -%} active {% endif -%}" href="{{ href }}">
             <span data-feather="{{ icon }}"></span>
             {{ text }}
           </a>
