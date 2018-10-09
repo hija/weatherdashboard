@@ -10,3 +10,7 @@ bp = Blueprint('settings', __name__, url_prefix='/settings')
 @bp.route('/')
 def getsensors():
     return render_template('settings/default.html')
+
+@bp.route('/about')
+def getabout():
+    return render_template('settings/about.html')
