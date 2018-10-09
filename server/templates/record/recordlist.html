@@ -2,13 +2,13 @@
 {% set active_page = "records_overview" %}
 
 {% block content %}
-  <h1>Records overview {%if not showstationname%}for {{ request.path.rsplit('/', 1)[-1] }} {% endif %}</h1>
+  <h1>Records overview {%if not showsensorname%}for {{ request.path.rsplit('/', 1)[-1] }} {% endif %}</h1>
   <table class="table table-striped">
     <thead>
       <tr>
         <th>ID</th>
-        {%if showstationname%}
-        <th>Stationname</th>
+        {%if showsensorname%}
+        <th>sensorname</th>
         {% endif %}
         <th>Zeitpunk</th>
         <th>Temperatur</th>
@@ -21,8 +21,8 @@
       {% for record in records %}
       <tr>
        <td>{{ record['id'] }}</td>
-       {%if showstationname%}
-       <td>{{ record['stationname'] }}</td>
+       {%if showsensorname%}
+       <td>{{ record['sensorname'] }}</td>
        {% endif %}
        <td>{{ record['timepoint'] }}</td>
        <td>{{ record['temperature'] }}</td>

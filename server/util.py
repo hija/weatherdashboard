@@ -1,7 +1,7 @@
 
-def station_exists(db, stationname):
-    return get_station_id(db, stationname) is not None
+def sensor_exists(db, sensorname):
+    return get_sensor_id(db, sensorname) is not None
 
-def get_station_id(db, stationname):
-    row = db.execute('SELECT id FROM station WHERE stationname = ?', (stationname,)).fetchone()
+def get_sensor_id(db, sensorname):
+    row = db.execute('SELECT id FROM sensor WHERE sensorname = ?', (sensorname,)).fetchone()
     return row['id'] if row is not None else None

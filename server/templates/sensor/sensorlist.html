@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
-{% set active_page = "stations_overview" %}
+{% set active_page = "sensors_overview" %}
 
 {% block content %}
-  <h1>Station-Overview</h1>
+  <h1>sensor-Overview</h1>
   <table class="table table-striped">
     <thead>
       <tr>
        <th>ID</th>
-       <th>Stationname</th>
+       <th>sensorname</th>
        <th>Description</th>
        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
-      {% for station in stations %}
+      {% for sensor in sensors %}
       <tr>
-       <td>{{ station['id'] }}</td>
-       <td>{{ station['stationname'] }}</td>
-       <td>{{ station['description'] }}</td>
+       <td>{{ sensor['id'] }}</td>
+       <td>{{ sensor['sensorname'] }}</td>
+       <td>{{ sensor['description'] }}</td>
        <td>XXX</td>
       </tr>
       {% endfor %}
