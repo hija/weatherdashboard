@@ -40,6 +40,18 @@
             {% endif %}
           {% endwith %}
 
+          {% with errors = get_flashed_messages(category_filter=["success"]) %}
+            {% if errors %}
+            <div class="alert alert-success mt-4" role="alert">
+              <ul>
+                {%- for msg in errors %}
+                <li>{{ msg }}</li>
+                {% endfor -%}
+              </ul>
+            </div>
+            {% endif %}
+          {% endwith %}
+
 
 
           {% block content %}

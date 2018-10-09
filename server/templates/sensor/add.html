@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% set active_page = "sensors_add" %}
+
+{% block content %}
+  <h1>Add Sensor</h1>
+  <form method="POST">
+  {{ form.csrf_token }}
+  <div class="form-group">
+    {{ form.name.label(class_="form-control-label") }}
+    {% if form.name.errors %}
+      {{ form.name(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.name.errors %}
+          <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+    {% else %}
+      {{ form.name(class="form-control form-control-lg") }}
+    {% endif %}
+  </div>
+  <div class="form-group">
+    {{ form.description.label(class_="form-control-label") }}
+    {% if form.description.errors %}
+      {{ form.description(class="form-control form-control-lg is-invalid") }}
+      <div class="invalid-feedback">
+        {% for error in form.description.errors %}
+          <span>{{ error }}</span>
+        {% endfor %}
+      </div>
+    {% else %}
+      {{ form.description(class="form-control form-control-lg") }}
+    {% endif %}
+  </div>
+  <button type="submit" class="btn btn-primary">Add</button>
+</form>
+{% endblock %}
