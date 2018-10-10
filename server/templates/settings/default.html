@@ -2,5 +2,34 @@
 {% set active_page = "settings_overview" %}
 
 {% block content %}
- <h1> Todo :-) </h1>
+ <h1> Settings</h1>
+ In this section you can set the settings for your dashboard.
+
+ <h3>Dummy Data Generation</h3>
+ If you want to generate dummy data you can do so by clicking the button below.
+ Please be aware, that this may mix up your production database with dummy entries.
+ Thus, you should do a backup first.
+
+ <form action="{{ url_for("settings.generate_dummy_data") }}" method="POST">
+   <div class="form-group">
+     <div class="form-check">
+     <input class="form-check-input" type="checkbox" id="dummy_generation_checkbox" onchange="document.getElementById('submit_dummy_generation').disabled = !this.checked;">
+     <label class="form-check-label" for="dummy_generation_checkbox">I understood the warning above and still want to continue!</label>
+     </div>
+   </div>
+   <button type="submit" class="btn btn-danger" id="submit_dummy_generation" disabled>Submit</button>
+ </form>
+
+ <h3>Reset Database</h3>
+ TODO
+
+ <form action="{{ url_for("settings.reset_db") }}" method="POST">
+   <div class="form-group">
+     <div class="form-check">
+     <input class="form-check-input" type="checkbox" id="reset_checkbox" onchange="document.getElementById('submit_reset').disabled = !this.checked;">
+     <label class="form-check-label" for="reset_checkbox">I understood the warning above and still want to continue!</label>
+     </div>
+   </div>
+   <button type="submit" class="btn btn-danger" id="submit_reset" disabled>Submit</button>
+ </form>
 {% endblock %}
