@@ -65,11 +65,15 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 
-    <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/feather.min.js') }}"></script>
+    {% block javascript %}
+      {% block javascript_include %}
+      <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+      <script src="{{ url_for('static', filename='js/feather.min.js') }}"></script>
+      {% endblock javascript_include %}
     <script>
       feather.replace()
     </script>
+    {% endblock javascript %}
 
   </body>
 </html>

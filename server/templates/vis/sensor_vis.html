@@ -9,6 +9,7 @@
 {% block javascript_include %}
     {{ super() }}
     <script src="{{ url_for('static', filename='js/Chart.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
 {% endblock javascript_include %}
 
 {% block javascript %}
@@ -19,23 +20,28 @@
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
+            labels: [
+              {% for date in data['dates'] %}
+              moment().format('{{ date }}'){{ "," if not loop.last }}
+              {% endfor %}
+            ],
             datasets: [{
                 label: 'Temperature',
-                data: [20, 30, 40, 30, 20],
+                data: [{{ data['temperature']|join(', ') }}],
                 yAxisID: 'temp-axis',
                 borderColor: "red",
                 fill: false
             },
             {
                 label: 'Humidity',
-                data: [.5,.3,.4,.2,.5],
+                data: [{{ data['humidity']|join(', ') }}],
                 yAxisID: 'humidity-axis',
                 borderColor: "blue",
                 fill: false
             },
             {
                 label: 'Air Pressure',
-                data: [1000,1100,900,800,900],
+                data: [{{ data['pressure']|join(', ') }}],
                 yAxisID: 'pressure-axis',
                 borderColor: "green",
                 fill: false
@@ -44,6 +50,10 @@
         },
         options: {
             scales: {
+              xAxes: [{
+                  type: 'time',
+                  distribution: 'series'
+                }],
                 yAxes: [{
                   id: 'temp-axis',
                   type: 'linear',
