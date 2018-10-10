@@ -3,7 +3,7 @@ from flask import (
 )
 
 from server.db import get_db
-from server.util import sensor_exists
+from server.util import sensor_exists, get_sensor_id
 
 bp = Blueprint('settings', __name__, url_prefix='/settings')
 
@@ -25,6 +25,7 @@ def reset_db():
 @bp.route('/generate_dummy_data', methods=("POST",))
 def generate_dummy_data():
     from secrets import choice
+    import random
     db = get_db()
 
     def generate_dummy_sensors():
@@ -43,8 +44,27 @@ def generate_dummy_data():
         return generated_sensors
 
     def generate_dummy_entries(sensors):
-        for _ in range(10):
-            pass
+        for sensor in sensors:
+            sensor_id = get_sensor_id(db, sensor)
+            temperature = random.randint(20, 35)
+            humidity = random.random()
+            pres = random.randint(900, 1500)
+            for i in range(10):
+                temperature = temperature + random.uniform(-5, 5)
+                humidity = humidity + random.uniform(-0.1, 0.1)
+                pres = pres + random.uniform(-10, 10)
+
+                # sanity checks
+                if humidity > 1:
+                    humidity = 1
+                elif humidity < 0:
+                    humidity = 0
+
+                db.execute('INSERT INTO record (sensor_id, temperature, humidity, pressure) VALUES (?, ?, ?, ?)',
+                (sensor_id, temperature, humidity, pres))
+            db.commit()
+
     sensors = generate_dummy_sensors()
+    generate_dummy_entries(sensors)
     flash('The dummy entries have been generated', 'success')
     return render_template('settings/default.html')
