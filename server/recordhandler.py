@@ -6,27 +6,6 @@ from server.util import sensor_exists, get_sensor_id
 
 bp = Blueprint('records', __name__, url_prefix='/records')
 
-@bp.route('/add', methods=('GET', 'POST'))
-def addrecord():
-    if request.method == 'POST':
-        if 'sensorname' in request.form:
-            sensorname = request.form['sensorname']
-            db = get_db()
-            if sensor_exists(db, sensorname):
-                # INSERT
-                temperature = request.form.get('temperature', 'NULL')
-                humidity = request.form.get('humidity', 'NULL')
-                air_pressure = request.form.get('air_pressure', 'NULL')
-                db.execute('INSERT INTO record (sensor_id, temperature, humidity, pressure) VALUES (?, ?, ?, ?)',
-                (get_sensor_id(db, sensorname), temperature, humidity, air_pressure))
-                db.commit()
-                return 'Inserted'
-            else:
-                return 'sensor does not exist'
-        else:
-            return 'Staionname not found in POST-Request'
-    return 'This method requires a POST-Request'
-
 @bp.route('/<string:sensorname>')
 def get_records_for_sensorname(sensorname):
     db = get_db()
