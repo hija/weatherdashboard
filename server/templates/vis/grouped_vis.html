@@ -2,13 +2,23 @@
 {% set active_page = "vis_overview" %}
 
 {% block content %}
- <h1> Todo :-) </h1>
+ <h1> Averaged sensor data from <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    all
+  </button>
+  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    {% for sensor in sensors %}
+    <a class="dropdown-item" href="{{ url_for("visualiations.get_vis_for_sensor", sensorname= sensor['sensorname']) }}">{{ sensor['sensorname'] }}</a>
+    {% endfor %}
+  </div> sensors </h1>
  <canvas id="visualisation"></canvas>
 {% endblock %}
 
 {% block javascript_include %}
-    {{ super() }}
+    <script src="{{ url_for('static', filename='js/jquery-3.3.1.min.js') }}"></script>
     <script src="{{ url_for('static', filename='js/Chart.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/popper.min.js') }}"></script>
+    {{ super() }}
 {% endblock javascript_include %}
 
 {% block javascript %}
@@ -19,23 +29,28 @@
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
+            labels: [
+              {% for date in data['dates'] %}
+              moment().format('{{ date }}'){{ "," if not loop.last }}
+              {% endfor %}
+            ],
             datasets: [{
                 label: 'Temperature',
-                data: [20, 30, 40, 30, 20],
+                data: [{{ data['temperature']|join(', ') }}],
                 yAxisID: 'temp-axis',
                 borderColor: "red",
                 fill: false
             },
             {
                 label: 'Humidity',
-                data: [.5,.3,.4,.2,.5],
+                data: [{{ data['humidity']|join(', ') }}],
                 yAxisID: 'humidity-axis',
                 borderColor: "blue",
                 fill: false
             },
             {
                 label: 'Air Pressure',
-                data: [1000,1100,900,800,900],
+                data: [{{ data['pressure']|join(', ') }}],
                 yAxisID: 'pressure-axis',
                 borderColor: "green",
                 fill: false
@@ -44,6 +59,10 @@
         },
         options: {
             scales: {
+              xAxes: [{
+                  type: 'time',
+                  distribution: 'series'
+                }],
                 yAxes: [{
                   id: 'temp-axis',
                   type: 'linear',
@@ -72,7 +91,8 @@
                   }
                 }
               ]
-            }
+            },
+            spanGaps: true
         }
     });
     </script>
