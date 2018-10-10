@@ -44,7 +44,11 @@ def generate_dummy_data():
         return generated_sensors
 
     def generate_dummy_entries(sensors):
+        from time import strftime, localtime
+        import datetime
+
         for sensor in sensors:
+            _time = datetime.datetime.now()
             sensor_id = get_sensor_id(db, sensor)
             temperature = random.randint(20, 35)
             humidity = random.random()
@@ -53,6 +57,7 @@ def generate_dummy_data():
                 temperature = temperature + random.uniform(-5, 5)
                 humidity = humidity + random.uniform(-0.1, 0.1)
                 pres = pres + random.uniform(-10, 10)
+                _time = _time - datetime.timedelta(minutes = 10)
 
                 # sanity checks
                 if humidity > 1:
@@ -60,8 +65,8 @@ def generate_dummy_data():
                 elif humidity < 0:
                     humidity = 0
 
-                db.execute('INSERT INTO record (sensor_id, temperature, humidity, pressure) VALUES (?, ?, ?, ?)',
-                (sensor_id, temperature, humidity, pres))
+                db.execute('INSERT INTO record (sensor_id, temperature, humidity, pressure, timepoint) VALUES (?, ?, ?, ?, ?)',
+                (sensor_id, temperature, humidity, pres, _time))
             db.commit()
 
     sensors = generate_dummy_sensors()
