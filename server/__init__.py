@@ -37,6 +37,8 @@ def create_app(test_config=None):
 
     @app.route('/')
     def hello():
-        return render_template('base.html')
+        dbase = db.get_db()
+        row = dbase.execute('SELECT COUNT(DISTINCT(record.id)) as num_records, COUNT(DISTINCT(sensor.id)) as num_sensors FROM record, sensor').fetchone()
+        return render_template('base.html', num_records = row['num_records'], num_sensors = row['num_sensors'])
 
     return app

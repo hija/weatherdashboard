@@ -2,7 +2,7 @@
 {% set active_page = "settings_overview" %}
 
 {% block content %}
- <h1> Settings</h1>
+ <h1>Settings</h1>
  In this section you can set the settings for your dashboard.
 
  <h3>Dummy Data Generation</h3>
@@ -21,7 +21,8 @@
  </form>
 
  <h3>Reset Database</h3>
- TODO
+ If you want to reset the database, all sensors and records will be deleted.
+ Please do a backup first!
 
  <form action="{{ url_for("settings.reset_db") }}" method="POST">
    <div class="form-group">
