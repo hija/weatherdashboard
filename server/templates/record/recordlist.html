@@ -28,7 +28,7 @@
        <td>{{ record['temperature'] }}</td>
        <td>{{ record['humidity'] }}</td>
        <td>{{ record['pressure'] }}</td>
-       <td>XXX</td>
+       <td><a href="{{ url_for("records.delete_record", record_id = record['id']) }}"><span data-feather="trash-2"></span></a></td>
       </tr>
       {% endfor %}
     </tbody>

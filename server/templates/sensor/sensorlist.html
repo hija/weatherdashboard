@@ -18,7 +18,7 @@
        <td>{{ sensor['id'] }}</td>
        <td>{{ sensor['sensorname'] }}</td>
        <td>{{ sensor['description'] }}</td>
-       <td>XXX</td>
+       <td><a href="{{ url_for("sensors.delete_sensor", sensorname = sensor['sensorname']) }}"><span data-feather="trash-2"></span></a></td>
       </tr>
       {% endfor %}
     </tbody>

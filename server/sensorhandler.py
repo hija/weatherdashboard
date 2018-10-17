@@ -54,6 +54,8 @@ def delete_sensor(sensorname):
     if sensor_exists(db, sensorname):
         db.execute('DELETE FROM sensor WHERE sensorname = ?', (sensorname,))
         db.commit()
-        return 'Deleted: {}'.format(sensorname)
+        flash(u'The sensor has been deleted!', 'success')
+        return getsensors()
     else:
-        return 'sensor does not exist!'
+        flash(u'The sensor does not exist!', 'error')
+        return getsensors()

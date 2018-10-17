@@ -1,89 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'vis/base.html' %}
 {% set active_page = "vis_overview" %}
 
 {% block content %}
- <h1> Todo :-) </h1>
+<h1> Sensor data from <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+   {{ sensorname }}
+ </button>
+ <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+   <a class="dropdown-item" href="{{ url_for("visualiations.get_sensors") }}"> all </a>
+   {% for sensor in sensors %}
+    {% if sensor['sensorname'] != sensorname %}
+   <a class="dropdown-item" href="{{ url_for("visualiations.get_vis_for_sensor", sensorname= sensor['sensorname']) }}">{{ sensor['sensorname'] }}</a>
+    {% endif %}
+   {% endfor %}
+ </div> sensor </h1>
  <canvas id="visualisation"></canvas>
 {% endblock %}
-
-{% block javascript_include %}
-    {{ super() }}
-    <script src="{{ url_for('static', filename='js/Chart.bundle.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/moment.min.js') }}"></script>
-{% endblock javascript_include %}
-
-{% block javascript %}
-    {{ super() }}
-    // Chartstuff
-    <script>
-    var ctx = document.getElementById("visualisation").getContext('2d');
-    var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: [
-              {% for date in data['dates'] %}
-              moment().format('{{ date }}'){{ "," if not loop.last }}
-              {% endfor %}
-            ],
-            datasets: [{
-                label: 'Temperature',
-                data: [{{ data['temperature']|join(', ') }}],
-                yAxisID: 'temp-axis',
-                borderColor: "red",
-                fill: false
-            },
-            {
-                label: 'Humidity',
-                data: [{{ data['humidity']|join(', ') }}],
-                yAxisID: 'humidity-axis',
-                borderColor: "blue",
-                fill: false
-            },
-            {
-                label: 'Air Pressure',
-                data: [{{ data['pressure']|join(', ') }}],
-                yAxisID: 'pressure-axis',
-                borderColor: "green",
-                fill: false
-
-          }]
-        },
-        options: {
-            scales: {
-              xAxes: [{
-                  type: 'time',
-                  distribution: 'series'
-                }],
-                yAxes: [{
-                  id: 'temp-axis',
-                  type: 'linear',
-                  position: 'right',
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Temperature"
-                  }
-                },
-                {
-                  id: 'humidity-axis',
-                  type: 'linear',
-                  position: 'right',
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Humidity"
-                  }
-                },
-                {
-                  id: 'pressure-axis',
-                  type: 'linear',
-                  position: 'right',
-                  scaleLabel: {
-                    display: true,
-                    labelString: "Air Pressure"
-                  }
-                }
-              ]
-            }
-        }
-    });
-    </script>
-{% endblock javascript%}

@@ -25,3 +25,12 @@ def get_records():
         'SELECT record.id, sensor.sensorname, timepoint, temperature, humidity, pressure FROM record INNER JOIN sensor on record.sensor_id = sensor.id; '
     ).fetchall()
     return render_template('record/recordlist.html', records=records, showsensorname = True)
+
+@bp.route('/delete/<int:record_id>')
+def delete_record(record_id):
+    # TODO: Sanitychecks, i.e. if recordid exists
+    db = get_db()
+    db.execute('DELETE FROM record WHERE id = ?', (record_id,))
+    db.commit()
+    flash(u'The record has been deleted!', 'success')
+    return get_records()
