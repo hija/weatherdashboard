@@ -13,14 +13,15 @@ To install the dependencies, please install python3 and python3-pip first and th
 pip3 install Flask Flask-wtf waitress
 ~~~~
 
-After you installed Flask, Flask-WTF and Waittress, you should first create the sqlite database by running (assuming you are running on a linux server):
+After you installed Flask, Flask-WTF and Waittress, you should first create the sqlite database by running (assuming you are running on a linux server) (inside the project folder!) :
 
 ~~~
 export FLASK_APP=server
 flask init-db
 ~~~
+(If this does not work try `python -m flask init-db`)
 
-Now you should be able to run the project with
+Now you should be able to run the project (inside the project folder!) with
 
 ~~~~
 python3 start.py
