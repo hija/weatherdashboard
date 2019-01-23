@@ -19,7 +19,7 @@ After you installed Flask, Flask-WTF and Waittress, you should first create the 
 export FLASK_APP=server
 flask init-db
 ~~~
-(If this does not work try `python -m flask init-db`)
+(If this does not work try `python3 -m flask init-db`)
 
 Now you should be able to run the project (inside the project folder!) with
 
